@@ -8,8 +8,8 @@ import java.io.*;
 
 public class TileManager {
     GamePanel gp;
-    Tile[] tiles;
-    int mapTileNum[][];
+    public Tile[] tiles;
+    public int mapTileNum[][];
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
@@ -26,15 +26,18 @@ public class TileManager {
 
             tiles[1]=new Tile();
             tiles[1].image= ImageIO.read(getClass().getResourceAsStream("/res/tiles/wall.png"));
+            tiles[1].collision=true;
 
             tiles[2]=new Tile();
             tiles[2].image= ImageIO.read(getClass().getResourceAsStream("/res/tiles/water.png"));
+            tiles[2].collision=true;
 
             tiles[3]=new Tile();
             tiles[3].image= ImageIO.read(getClass().getResourceAsStream("/res/tiles/earth.png"));
 
             tiles[4]=new Tile();
             tiles[4].image= ImageIO.read(getClass().getResourceAsStream("/res/tiles/tree.png"));
+            tiles[4].collision=true;
 
             tiles[5]=new Tile();
             tiles[5].image= ImageIO.read(getClass().getResourceAsStream("/res/tiles/sand.png"));
@@ -77,14 +80,19 @@ public class TileManager {
 
             int worldX = worldCol*gp.tileSize;
             int worldY = worldRow*gp.tileSize;
+
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+
             if(worldX + gp.tileSize>gp.player.worldX-gp.player.screenX
                     && worldX - gp.tileSize<gp.player.worldX+gp.player.screenX
                     && worldY + gp.tileSize>gp.player.worldY-gp.player.screenY
                     && worldY - gp.tileSize<gp.player.worldY+gp.player.screenY){
                 g2d.drawImage(tiles[tileNum].image,screenX,screenY,gp.tileSize,gp.tileSize,null);
             }
+
+
 
             worldCol++;
 
