@@ -114,15 +114,22 @@ public class Player extends Entity{
             switch (objectName) {
                 case "Key":
                     hasKey++;
+                    gp.playSE(1);
                     gp.obj[index] = null;
                     break;
                 case "Dor":
-                    System.out.println(hasKey);
                     if (hasKey > 0) {
+                        gp.playSE(4);
                         gp.obj[index] = null;
                         hasKey--;
                     }
                     break;
+                case "Boots":
+                    speed+=2;
+                    gp.playSE(3);
+                    gp.obj[index] = null;
+                    break;
+
 
             }
         }
