@@ -16,7 +16,7 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
 
-    public int hasKey=0;
+    //public int hasKey=0;
 
     public Player(GamePanel gp, KeyHandler keyHandler) {
         this.gp = gp;
@@ -121,38 +121,7 @@ public class Player extends Entity{
 
     public void pickObject(int index){
         if(index!=999){
-            String objectName = gp.obj[index].name;
-            switch (objectName) {
-                case "Key":
-                    hasKey++;
-                    gp.playSE(1);
-                    gp.obj[index] = null;
-                    gp.ui.showMessage("You got a Key!");
-                    break;
-                case "Dor":
-                    if (hasKey > 0) {
-                        gp.playSE(4);
-                        gp.obj[index] = null;
-                        hasKey--;
-                        gp.ui.showMessage("You open the door!");
-                    }else{
-                        gp.ui.showMessage("You need a key!");
-                    }
-                    break;
-                case "Boots":
-                    speed+=2;
-                    gp.playSE(3);
-                    gp.ui.showMessage("Speed");
-                    gp.obj[index] = null;
-                    break;
-                case "Chest":
-                    gp.ui.gameOver=true;
-                    gp.stopMusic();
-                    gp.playSE(2);
-                    break;
 
-
-            }
         }
     }
 
