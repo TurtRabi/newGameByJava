@@ -127,13 +127,36 @@ public class TileManager {
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
+            //stop moving camera at the edge
+            if(gp.player.screenX>gp.player.worldX){
+                screenX =worldX;
+            }
+            if(gp.player.screenY>gp.player.worldY){
+                screenY =worldY;
+            }
+
+            int rightOffset = gp.screenWith-gp.player.screenX;
+            if(rightOffset>gp.worldWidth-gp.player.worldX){
+                screenX =gp.screenWith -(gp.worldWidth-worldX);
+            }
+
+            int bottomOffset = gp.screenHeight-gp.player.screenY;
+            if(bottomOffset>gp.worldHeight-gp.player.worldY){
+                screenY =gp.screenHeight -(gp.worldHeight-worldY);
+            }
+
 
             if(worldX + gp.tileSize>gp.player.worldX-gp.player.screenX
                     && worldX - gp.tileSize<gp.player.worldX+gp.player.screenX
                     && worldY + gp.tileSize>gp.player.worldY-gp.player.screenY
                     && worldY - gp.tileSize<gp.player.worldY+gp.player.screenY){
                 g2d.drawImage(tiles[tileNum].image,screenX,screenY,null);
+            }else if(gp.player.screenX>gp.player.worldX||gp.player.screenY>gp.player.worldY
+            ||rightOffset>gp.worldWidth-gp.player.worldX||bottomOffset>gp.worldHeight-gp.player.worldY){
+                g2d.drawImage(tiles[tileNum].image,screenX,screenY,null);
             }
+
+
 
 
 

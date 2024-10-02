@@ -169,6 +169,26 @@ public class Player extends Entity{
                 break;
 
         }
-        g2d.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+
+
+        int x= screenX;
+        int y=screenY;
+        if(screenX>worldX){
+            x=worldX;
+        }
+        if(screenY>worldY){
+            y=worldY;
+        }
+
+        int rightOffset = gp.screenWith-screenX;
+        if(rightOffset>gp.worldWidth-worldX){
+            x =gp.screenWith -(gp.worldWidth-worldX);
+        }
+
+        int bottomOffset = gp.screenHeight-screenY;
+        if(bottomOffset>gp.worldHeight-worldY){
+            y =gp.screenHeight -(gp.worldHeight-worldY);
+        }
+        g2d.drawImage(image,x,y,gp.tileSize,gp.tileSize,null);
     }
 }
