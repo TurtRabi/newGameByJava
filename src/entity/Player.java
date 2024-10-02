@@ -2,15 +2,12 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-import main.UtiilityTool;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+
 
 public class Player extends Entity{
-    GamePanel gp;
     KeyHandler keyHandler;
 
     public final int screenX;
@@ -19,7 +16,7 @@ public class Player extends Entity{
     //public int hasKey=0;
 
     public Player(GamePanel gp, KeyHandler keyHandler) {
-        this.gp = gp;
+        super(gp);
         this.keyHandler = keyHandler;
         screenX = gp.screenWith/2-(gp.tileSize/2);
         screenY = gp.screenHeight/2-(gp.tileSize/2);
@@ -41,29 +38,16 @@ public class Player extends Entity{
     }
 
     public void getPlayerImage(){
-        up1=setup("boy_up_1");
-        up2=setup("boy_up_2");
-        down1=setup("boy_down_1");
-        down2=setup("boy_down_2");
-        left1=setup("boy_left_1");
-        left2=setup("boy_left_2");
-        right1=setup("boy_right_1");
-        right2=setup("boy_right_2");
+        up1=setup("/res/player/boy_up_1");
+        up2=setup("/res/player/boy_up_2");
+        down1=setup("/res/player/boy_down_1");
+        down2=setup("/res/player/boy_down_2");
+        left1=setup("/res/player/boy_left_1");
+        left2=setup("/res/player/boy_left_2");
+        right1=setup("/res/player/boy_right_1");
+        right2=setup("/res/player/boy_right_2");
     }
 
-    public BufferedImage setup(String imageName){
-        UtiilityTool utiilityTool = new UtiilityTool();
-        BufferedImage scaleImage = null;
-
-        try{
-            scaleImage = ImageIO.read(getClass().getResourceAsStream("/res/player/" + imageName + ".png"));
-            scaleImage=utiilityTool.scaleImage(scaleImage, gp.tileSize, gp.tileSize);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return scaleImage;
-    }
 
     public void update(){
         if(keyHandler.upPressed || keyHandler.downPressed
@@ -87,6 +71,9 @@ public class Player extends Entity{
 
             //check object collision
             int objIndex=gp.collisionChecker.checkObject(this,true);
+            //chech npc collection
+            int NpcIndex=gp.collisionChecker.checkEntity(this,gp.npc);
+            interactNPC(NpcIndex);
             pickObject(objIndex);
             //if collision is false, player can move
             if(collisionOn==false){
@@ -122,6 +109,12 @@ public class Player extends Entity{
     public void pickObject(int index){
         if(index!=999){
 
+        }
+    }
+
+    public void interactNPC(int index){
+        if(index!=999){
+            System.out.println("you are hittiing");
         }
     }
 
