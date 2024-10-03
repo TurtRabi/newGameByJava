@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenRow = 12;
     public final int screenWith = maxScreenCol*tileSize;
     public final int screenHeight = maxScreenRow*tileSize;
-    KeyHandler keyHandler = new KeyHandler(this);
+    public KeyHandler keyHandler = new KeyHandler(this);
     //FPS
     int FPS = 60;
     //World Settings
@@ -55,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int gameState;
     public  final int playerState = 1;
     public  final int pauseState = 2;
+    public final int dialogueState =3;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWith, screenHeight));
