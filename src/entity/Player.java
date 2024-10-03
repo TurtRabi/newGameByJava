@@ -114,8 +114,12 @@ public class Player extends Entity{
 
     public void interactNPC(int index){
         if(index!=999){
-            System.out.println("you are hittiing");
+            if(gp.keyHandler.enterPressed==true){
+                gp.gameState=gp.dialogueState;
+                gp.npc[index].speak();
+            }
         }
+        gp.keyHandler.enterPressed=false;
     }
 
 
