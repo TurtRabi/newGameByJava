@@ -4,12 +4,14 @@ import object.OBJ_Key;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 
 public class UI {
     GamePanel gp;
     Graphics2D g2d;
-    Font arial_40,arial_80;
+    Font maruMonica,purisaB;
 
     public boolean messageOn=false;
     public String message="";
@@ -19,8 +21,19 @@ public class UI {
 
     public UI(GamePanel gp) {
         this.gp = gp;
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        arial_80 = new Font("Arial", Font.BOLD, 80);
+
+        try {
+            InputStream is =getClass().getResourceAsStream("/res/fonts/x12y16pxMaruMonica.ttf");
+            maruMonica = Font.createFont(Font.TRUETYPE_FONT,is);
+            is = getClass().getResourceAsStream("/res/fonts/Purisa Bold.ttf");
+            purisaB = Font.createFont(Font.TRUETYPE_FONT,is);
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
 
 
     }
@@ -31,7 +44,9 @@ public class UI {
     public void draw(Graphics2D g2){
         this.g2d=g2;
 
-        g2.setFont(arial_40);
+        //g2.setFont(maruMonica);
+        g2.setFont(purisaB);
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.white);
 
         //Player state
@@ -57,7 +72,7 @@ public class UI {
         int height=gp.tileSize*4;
         drawSubWindow(x,y,with,height);
 
-        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN,32F));
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN,20F));
         x+=gp.tileSize/2;
         y+=gp.tileSize;
 
