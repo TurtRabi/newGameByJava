@@ -18,6 +18,8 @@ public class UI {
     public boolean gameOver=false;
 
     public String currentDialogue="";
+    public int commandNum=0;
+    public  int tiltleScreenState=0; //0: the first Screen, 1: the second screen
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -44,11 +46,15 @@ public class UI {
     public void draw(Graphics2D g2){
         this.g2d=g2;
 
-        //g2.setFont(maruMonica);
-        g2.setFont(purisaB);
+        g2.setFont(maruMonica);
+        //g2.setFont(purisaB);
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.white);
 
+        //TITLE STATE
+        if(gp.gameState == gp.titleState){
+            drawTitleScreen();
+        }
         //Player state
         if(gp.gameState==gp.playerState){
             //do playstate stuff later
@@ -64,6 +70,104 @@ public class UI {
 
     }
 
+    public void drawTitleScreen(){
+        if(tiltleScreenState==0){
+            g2d.setColor(new Color(0, 0, 0));
+            g2d.fillRect(0,0,gp.screenWith,gp.screenHeight);
+            //TITLE NAME
+            g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,96F));
+            String text = "Blue Boy Adventure";
+            int x = getXForCenterText(text);
+            int y =gp.tileSize*3;
+            //SHADOW
+            g2d.setColor(Color.GRAY);
+            g2d.drawString(text,x+5,y+5);
+            //MAIN COLOR
+            g2d.setColor(Color.WHITE);
+            g2d.drawString(text,x,y);
+
+            //Blue Boy Image
+
+            x=gp.screenWith/2-(gp.tileSize*2)/2;
+            y+=gp.tileSize*2;
+            g2d.drawImage(gp.player.down1,x,y,gp.tileSize*2,gp.tileSize*2,null);
+
+            //Menu
+            g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,48F));
+            text ="NEW GAME";
+            x = getXForCenterText(text);
+            y+=gp.tileSize*3.5;
+            g2d.drawString(text,x,y);
+            if(commandNum==0){
+                g2d.drawString(">",x-gp.tileSize,y);
+            }
+
+            g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,32F));
+            text ="LOAD GAME";
+            x = getXForCenterText(text);
+            y+=gp.tileSize;
+            g2d.drawString(text,x,y);
+            if(commandNum==1){
+                g2d.drawString(">",x-gp.tileSize,y);
+            }
+
+            g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,32F));
+            text ="QUIT";
+            x = getXForCenterText(text);
+            y+=gp.tileSize;
+            g2d.drawString(text,x,y);
+            if(commandNum==2){
+                g2d.drawString(">",x-gp.tileSize,y);
+            }
+        }else if(tiltleScreenState==1){
+            //Class Selection Screen;
+            g2d.setColor(Color.WHITE);
+            g2d.setFont(g2d.getFont().deriveFont(42F));
+
+            String text = "Select your class!";
+            int x = getXForCenterText(text);
+            int y =gp.tileSize*3;
+
+            g2d.drawString(text,x,y);
+
+            text ="Fighter";
+            x = getXForCenterText(text);
+            y+=gp.tileSize*3;
+            g2d.drawString(text,x,y);
+            if(commandNum==0){
+                g2d.drawString(">",x-gp.tileSize,y);
+            }
+
+
+            text ="Thief";
+            x = getXForCenterText(text);
+            y+=gp.tileSize;
+            g2d.drawString(text,x,y);
+            if(commandNum==1){
+                g2d.drawString(">",x-gp.tileSize,y);
+            }
+
+            text ="Sorcerer";
+            x = getXForCenterText(text);
+            y+=gp.tileSize;
+            g2d.drawString(text,x,y);
+            if(commandNum==2){
+                g2d.drawString(">",x-gp.tileSize,y);
+            }
+
+            text ="Back";
+            x = getXForCenterText(text);
+            y+=gp.tileSize*2;
+            g2d.drawString(text,x,y);
+            if(commandNum==3){
+                g2d.drawString(">",x-gp.tileSize,y);
+            }
+
+        }
+
+
+    }
+
     public void drawDialogueScreen(){
         //Window
         int x =gp.tileSize*2;
@@ -72,7 +176,7 @@ public class UI {
         int height=gp.tileSize*4;
         drawSubWindow(x,y,with,height);
 
-        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN,20F));
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN,32F));
         x+=gp.tileSize/2;
         y+=gp.tileSize;
 

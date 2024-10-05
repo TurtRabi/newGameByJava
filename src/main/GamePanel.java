@@ -53,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Game State
     public int gameState;
+    public final int titleState=0;
     public  final int playerState = 1;
     public  final int pauseState = 2;
     public final int dialogueState =3;
@@ -69,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
         assetSetter.setObject();
         assetSetter.setNPC();
         playMusic(0);
-        gameState= playerState;
+        gameState= titleState;
     }
     public  void startGameThread(){
         gameThread = new Thread(this);
@@ -127,25 +128,33 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        //TITLE
-        tileManager.draw(g2d);
-        //OBJECT
-        for(int i=0;i<obj.length;i++){
-            if(obj[i]!=null){
-                obj[i].draw(g2d,this);
-            }
+        //TITLE SCREEN
+        if(gameState == titleState){
+            ui.draw(g2d);
+            return;
         }
-        //NPC
-        for(int i=0;i<npc.length;i++){
-            if(npc[i]!=null){
-                npc[i].draw(g2d);
+        else{
+            //TITLE
+            tileManager.draw(g2d);
+            //OBJECT
+            for(int i=0;i<obj.length;i++){
+                if(obj[i]!=null){
+                    obj[i].draw(g2d,this);
+                }
             }
-        }
-        //PLAYER
-        player.draw(g2d,tileSize);
+            //NPC
+            for(int i=0;i<npc.length;i++){
+                if(npc[i]!=null){
+                    npc[i].draw(g2d);
+                }
+            }
+            //PLAYER
+            player.draw(g2d,tileSize);
 
-        ui.draw(g2d);
-        g2d.dispose();
+            ui.draw(g2d);
+            g2d.dispose();
+        }
+
     }
 
     public void playMusic(int i){
